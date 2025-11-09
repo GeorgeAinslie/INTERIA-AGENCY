@@ -230,6 +230,35 @@
     handleGesture();
   }, {passive:true});
 </script>
+<script src="https://unpkg.com/swup@4"></script>
+<script>
+  // Initialize Swup (replaces the #swup container between pages)
+  const swup = new Swup({ containers: ['#swup'] });
+
+  // Add slide-out class to the old page when leaving
+  document.addEventListener('swup:willReplaceContent', () => {
+    const box = document.querySelector('#swup');
+    const main = box && box.querySelector('main');
+    if (main) main.classList.add('slide-out');
+  });
+
+  // Add slide-in class to the new page when it loads, then animate in
+  function enterAnimation() {
+    const box = document.querySelector('#swup');
+    const main = box && box.querySelector('main');
+    if (!main) return;
+    main.classList.add('slide-in');
+    requestAnimationFrame(() => {
+      // next paint: add .ready to trigger the CSS transition
+      main.classList.add('ready');
+      // cleanup after the animation
+      setTimeout(() => main.classList.remove('slide-in','ready','slide-out'), 550);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', enterAnimation);
+  document.addEventListener('swup:contentReplaced', enterAnimation);
+</script>
 
 </body>
 </html>

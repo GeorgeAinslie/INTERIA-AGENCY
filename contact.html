@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interia Agency</title>
+  <meta name="description" content="Interia Agency — a creative agency bridging design and digital growth.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: '#ffffff',
+            ink: '#1a1a1a',
+            sand: '#ffffff',
+            stone: '#6b7280',
+            accent: '#ff6b33'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'Arial', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .container { max-width: 1100px; }
+    .nav-link { @apply text-sm md:text-[15px] text-gray-700 hover:text-black transition; }
+    .btn { @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium; }
+    .btn-primary { @apply bg-[color:var(--tw-accent,#ff6b33)] text-white hover:opacity-90; }
+    .btn-outline { @apply border border-[color:var(--tw-accent,#ff6b33)] text-[color:var(--tw-accent,#ff6b33)] hover:bg-[color:var(--tw-accent,#ff6b33)] hover:text-white; }
+    .chip { @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium bg-gray-100 text-gray-800; }
+    .card { @apply rounded-2xl border border-gray-200 bg-white shadow-sm; }
+  </style>
+
+  <style>
+    /* Swup slide transition */
+    .transition-slide { position: relative; }
+    html.is-changing .transition-slide { overflow: hidden; }
+    html.is-animating .transition-slide { }
+    .slide-in, .slide-out { transition: transform .45s ease, opacity .45s ease; will-change: transform, opacity; }
+    /* initial states controlled by swup classes below */
+    html.is-animating .transition-slide .slide-out { transform: translateX(-30px); opacity: 0.02; }
+    html.is-animating .transition-slide .slide-in { transform: translateX(0); opacity: 1; }
+    /* default positions before anim */
+    .transition-slide .slide-in { transform: translateX(30px); opacity: 0.02; }
+  </style>
+
+</head>
+<body class="font-sans text-gray-900 bg-white">
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur">
+  <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="assets/logo.png" alt="Interia Agency" class="h-7 w-auto">
+    </a>
+    <nav class="hidden md:flex items-center gap-6">
+      <a class="nav-link" href="about.html">About</a>
+      <a class="nav-link" href="what-we-offer.html">What we offer</a>
+      <a class="nav-link" href="case-studies.html">Case studies</a>
+      <a class="nav-link" href="contact.html">Contact</a>
+    </nav>
+    <a class="hidden md:inline-flex btn btn-primary" href="contact.html">Start your project</a>
+    <button id="menuBtn" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-xl border border-gray-300" aria-label="Open menu">
+      ☰
+    </button>
+  </div>
+  <div id="mobileMenu" class="md:hidden hidden border-t border-gray-200">
+    <div class="px-4 py-3 space-y-2">
+      <a class="block nav-link" href="about.html">About</a>
+      <a class="block nav-link" href="what-we-offer.html">What we offer</a>
+      <a class="block nav-link" href="case-studies.html">Case studies</a>
+      <a class="block nav-link" href="contact.html">Contact</a>
+      <a class="btn btn-primary w-full mt-2" href="contact.html">Start your project</a>
+    </div>
+  </div>
+</header>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    if (btn && menu) {
+      btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    }
+  });
+</script>
+
+<div id="swup" class="transition-slide"><main class="container mx-auto px-4 pt-16">
+  <header class="max-w-2xl">
+    <h1 class="text-3xl md:text-4xl font-semibold">Contact</h1>
+    <p class="text-gray-700 mt-4 md:text-lg">Tell us about your project — we’ll reply within 24 hours.</p>
+  </header>
+
+  <section class="mt-8 grid md:grid-cols-3 gap-8">
+    <form action="https://formspree.io/f/mwkgybdn" method="POST" class="md:col-span-2 card p-6">
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="text-sm text-gray-700">Name</label>
+          <input type="text" name="name" required class="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2">
+        </div>
+        <div>
+          <label class="text-sm text-gray-700">Email</label>
+          <input type="email" name="email" required class="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2">
+        </div>
+      </div>
+      <div class="mt-4">
+        <label class="text-sm text-gray-700">Brand / Company</label>
+        <input type="text" name="company" class="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2">
+      </div>
+      <div class="mt-4">
+        <label class="text-sm text-gray-700">Project type</label>
+        <select name="project_type" class="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2">
+          <option>Branding & Design</option>
+          <option>Web Design</option>
+          <option>Social & Ads</option>
+          <option>Content & Production</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="mt-4">
+        <label class="text-sm text-gray-700">Message</label>
+        <textarea name="message" rows="5" class="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2"></textarea>
+      </div>
+      <button class="btn btn-primary mt-6" type="submit">Send message</button>
+    </form>
+
+    <div class="card p-6 space-y-4">
+      <div>
+        <h3 class="font-semibold">Direct</h3>
+        <p class="text-sm text-gray-700">hello@interia.agency</p>
+      </div>
+      <div>
+        <h3 class="font-semibold">Social</h3>
+        <p class="text-sm text-gray-700">Instagram / LinkedIn</p>
+      </div>
+      <div>
+        <h3 class="font-semibold">Location</h3>
+        <p class="text-sm text-gray-700">UK — Remote & on‑site by request</p>
+      </div>
+    </div>
+  </section>
+</main></div>
+<footer class="mt-20 border-t border-gray-200">
+  <div class="container mx-auto px-4 py-10 grid md:grid-cols-3 gap-8 items-center">
+    <div class="space-y-2">
+      <img src="assets/logo.png" alt="Interia Agency" class="h-7 w-auto">
+      <p class="text-sm text-gray-600">Design. Build. Grow.</p>
+    </div>
+    <div class="text-sm text-gray-600">
+      <p>Interia Agency — Creative strategy for ambitious brands.</p>
+      <p class="mt-1">Email: hello@interia.agency</p>
+    </div>
+    <div class="flex md:justify-end gap-3">
+      <a href="case-studies.html" class="btn btn-outline">View work</a>
+      <a href="contact.html" class="btn btn-primary">Start your project</a>
+    </div>
+  </div>
+  <div class="text-center text-xs text-gray-500 pb-8">
+    © <span id="year"></span> Interia Agency. All rights reserved.
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<script src="https://unpkg.com/swup@4"></script>
+<script>
+  // Initialize swup with containers
+  const swup = new Swup({
+    containers: ['#swup']
+  });
+
+  // apply classes for slide anim on content replace
+  function applySlideClasses() {
+    const container = document.querySelector('#swup');
+    if (!container) return;
+    // remove any old classes
+    container.querySelectorAll('[data-swup]').forEach(el => {
+      el.classList.remove('slide-in','slide-out');
+    });
+    // mark new content
+    requestAnimationFrame(() => {
+      const main = container.querySelector('main');
+      if (main) {
+        main.setAttribute('data-swup','');
+        main.classList.add('slide-in');
+        // after a tick, remove slide-in so future transitions work
+        setTimeout(() => main.classList.remove('slide-in'), 500);
+      }
+    });
+  }
+  document.addEventListener('swup:contentReplaced', applySlideClasses);
+  document.addEventListener('DOMContentLoaded', applySlideClasses);
+
+  // --- Simple swipe navigation (mobile) ---
+  const pages = ['index.html','about.html','what-we-offer.html','case-studies.html','contact.html'];
+  function currentIndex() {
+    const path = location.pathname.split('/').pop() || 'index.html';
+    const i = pages.indexOf(path);
+    return i === -1 ? 0 : i;
+  }
+  let touchStartX = 0, touchEndX = 0, touchStartY = 0, touchEndY = 0;
+
+  function handleGesture() {
+    const dx = touchEndX - touchStartX;
+    const dy = Math.abs(touchEndY - touchStartY);
+    if (Math.abs(dx) < 60 || dy > 60) return; // horizontal swipe threshold
+    let i = currentIndex();
+    if (dx < 0 && i < pages.length - 1) {
+      swup.navigate(pages[i+1]);
+    } else if (dx > 0 && i > 0) {
+      swup.navigate(pages[i-1]);
+    }
+  }
+
+  document.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    touchStartX = t.clientX; touchStartY = t.clientY;
+  }, {passive:true});
+  document.addEventListener('touchend', (e) => {
+    const t = e.changedTouches[0];
+    touchEndX = t.clientX; touchEndY = t.clientY;
+    handleGesture();
+  }, {passive:true});
+</script>
+
+</body>
+</html>

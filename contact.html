@@ -57,18 +57,14 @@
     .card { @apply rounded-2xl border border-gray-200 bg-white shadow-sm; }
   </style>
 
-  <style>
-    /* Swup slide transition */
-    .transition-slide { position: relative; }
-    html.is-changing .transition-slide { overflow: hidden; }
-    html.is-animating .transition-slide { }
-    .slide-in, .slide-out { transition: transform .45s ease, opacity .45s ease; will-change: transform, opacity; }
-    /* initial states controlled by swup classes below */
-    html.is-animating .transition-slide .slide-out { transform: translateX(-30px); opacity: 0.02; }
-    html.is-animating .transition-slide .slide-in { transform: translateX(0); opacity: 1; }
-    /* default positions before anim */
-    .transition-slide .slide-in { transform: translateX(30px); opacity: 0.02; }
-  </style>
+ <style>
+  /* Slide transition for Swup */
+  #swup main { will-change: transform, opacity; }
+  .slide-in { transform: translateX(28px); opacity: .02; }
+  .slide-in.ready { transform: translateX(0); opacity: 1; transition: transform .45s ease, opacity .45s ease; }
+  .slide-out { transform: translateX(-28px); opacity: .02; transition: transform .45s ease, opacity .45s ease; }
+</style>
+
 
 </head>
 <body class="font-sans text-gray-900 bg-white">
@@ -186,93 +182,29 @@
 
 <script src="https://unpkg.com/swup@4"></script>
 <script>
-  // Initialize swup with containers
-  const swup = new Swup({
-    containers: ['#swup']
-  });
-
-  // apply classes for slide anim on content replace
-  function applySlideClasses() {
-    const container = document.querySelector('#swup');
-    if (!container) return;
-    // remove any old classes
-    container.querySelectorAll('[data-swup]').forEach(el => {
-      el.classList.remove('slide-in','slide-out');
-    });
-    // mark new content
-    requestAnimationFrame(() => {
-      const main = container.querySelector('main');
-      if (main) {
-        main.setAttribute('data-swup','');
-        main.classList.add('slide-in');
-        // after a tick, remove slide-in so future transitions work
-        setTimeout(() => main.classList.remove('slide-in'), 500);
-      }
-    });
-  }
-  document.addEventListener('swup:contentReplaced', applySlideClasses);
-  document.addEventListener('DOMContentLoaded', applySlideClasses);
-
-  // --- Simple swipe navigation (mobile) ---
-  const pages = ['index.html','about.html','what-we-offer.html','case-studies.html','contact.html'];
-  function currentIndex() {
-    const path = location.pathname.split('/').pop() || 'index.html';
-    const i = pages.indexOf(path);
-    return i === -1 ? 0 : i;
-  }
-  let touchStartX = 0, touchEndX = 0, touchStartY = 0, touchEndY = 0;
-
-  function handleGesture() {
-    const dx = touchEndX - touchStartX;
-    const dy = Math.abs(touchEndY - touchStartY);
-    if (Math.abs(dx) < 60 || dy > 60) return; // horizontal swipe threshold
-    let i = currentIndex();
-    if (dx < 0 && i < pages.length - 1) {
-      swup.navigate(pages[i+1]);
-    } else if (dx > 0 && i > 0) {
-      swup.navigate(pages[i-1]);
-    }
-  }
-
-  document.addEventListener('touchstart', (e) => {
-    const t = e.changedTouches[0];
-    touchStartX = t.clientX; touchStartY = t.clientY;
-  }, {passive:true});
-  document.addEventListener('touchend', (e) => {
-    const t = e.changedTouches[0];
-    touchEndX = t.clientX; touchEndY = t.clientY;
-    handleGesture();
-  }, {passive:true});
-</script>
-<script src="https://unpkg.com/swup@4"></script>
-<script>
-  // Initialize Swup (replaces the #swup container between pages)
+  // init Swup once
   const swup = new Swup({ containers: ['#swup'] });
 
-  // Add slide-out class to the old page when leaving
+  // leave animation
   document.addEventListener('swup:willReplaceContent', () => {
-    const box = document.querySelector('#swup');
-    const main = box && box.querySelector('main');
+    const main = document.querySelector('#swup main');
     if (main) main.classList.add('slide-out');
   });
 
-  // Add slide-in class to the new page when it loads, then animate in
+  // enter animation
   function enterAnimation() {
-    const box = document.querySelector('#swup');
-    const main = box && box.querySelector('main');
+    const main = document.querySelector('#swup main');
     if (!main) return;
     main.classList.add('slide-in');
     requestAnimationFrame(() => {
-      // next paint: add .ready to trigger the CSS transition
       main.classList.add('ready');
-      // cleanup after the animation
-      setTimeout(() => main.classList.remove('slide-in','ready','slide-out'), 550);
+      setTimeout(() => main.classList.remove('slide-in', 'ready', 'slide-out'), 550);
     });
   }
-
   document.addEventListener('DOMContentLoaded', enterAnimation);
   document.addEventListener('swup:contentReplaced', enterAnimation);
 </script>
+
 
 </body>
 </html>

@@ -58,12 +58,18 @@
   </style>
 
   <style>
-  /* Slide transition for Swup */
-  #swup main { will-change: transform, opacity; }
-  .slide-in { transform: translateX(28px); opacity: .02; }
-  .slide-in.ready { transform: translateX(0); opacity: 1; transition: transform .45s ease, opacity .45s ease; }
-  .slide-out { transform: translateX(-28px); opacity: .02; transition: transform .45s ease, opacity .45s ease; }
+  /* Swup slide using html state classes */
+  .transition-slide { will-change: transform, opacity; }
+
+  /* Leaving page (slide left + fade) */
+  html.is-changing .transition-slide { transition: transform .45s ease, opacity .45s ease; }
+  html.is-leaving  .transition-slide { transform: translateX(-28px); opacity: .02; }
+
+  /* Entering page (start right, slide in) */
+  html.is-rendering .transition-slide { transform: translateX(28px); opacity: .02; }
+  html.is-animating .transition-slide { transform: translateX(0);   opacity: 1;  }
 </style>
+
 
 
 </head>
@@ -104,7 +110,8 @@
   });
 </script>
 
-<div id="swup" class="transition-slide"><main class="container mx-auto px-4 pt-16">
+<main id="swup" class="transition-slide container mx-auto px-4 pt-16">
+
   <section class="max-w-2xl">
     <h1 class="text-3xl md:text-4xl font-semibold">About Interia Agency</h1>
     <p class="text-gray-700 mt-4 md:text-lg">
@@ -136,7 +143,8 @@
       <a href="contact.html" class="btn btn-primary mt-4">Work with us</a>
     </div>
   </section>
-</main></div>
+</main>
+
 <footer class="mt-20 border-t border-gray-200">
   <div class="container mx-auto px-4 py-10 grid md:grid-cols-3 gap-8 items-center">
     <div class="space-y-2">
@@ -160,27 +168,7 @@
 
 <script src="https://unpkg.com/swup@4"></script>
 <script>
-  // init Swup once
-  const swup = new Swup({ containers: ['#swup'] });
-
-  // leave animation
-  document.addEventListener('swup:willReplaceContent', () => {
-    const main = document.querySelector('#swup main');
-    if (main) main.classList.add('slide-out');
-  });
-
-  // enter animation
-  function enterAnimation() {
-    const main = document.querySelector('#swup main');
-    if (!main) return;
-    main.classList.add('slide-in');
-    requestAnimationFrame(() => {
-      main.classList.add('ready');
-      setTimeout(() => main.classList.remove('slide-in', 'ready', 'slide-out'), 550);
-    });
-  }
-  document.addEventListener('DOMContentLoaded', enterAnimation);
-  document.addEventListener('swup:contentReplaced', enterAnimation);
+  const swup = new Swup();
 </script>
 
 

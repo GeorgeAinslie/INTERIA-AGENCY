@@ -58,44 +58,17 @@
   </style>
 
 <style>
-  /* Base: no animation when not changing pages */
-  .transition-slide { 
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    contain: paint;
-    transform: none;
-    opacity: 1;
-  }
+  /* Sanity test: pure fade */
+  .transition-fade { opacity: 1; }
+  html.is-changing .transition-fade { transition: opacity .35s ease; }
+  html.is-leaving  .transition-fade { opacity: .02; }
+  html.is-rendering .transition-fade { opacity: .02; }
+  html.is-animating .transition-fade { opacity: 1; }
 
-  /* Animate only while Swup is doing a transition */
-  html.is-changing .transition-slide {
-    transition: transform .45s ease, opacity .45s ease;
-  }
-
-  /* Old page leaves (slides left + fades) */
-  html.is-leaving .transition-slide {
-    transform: translateX(-28px);
-    opacity: .02;
-  }
-
-  /* New page initial state (start right + faded) */
-  html.is-rendering .transition-slide {
-    transform: translateX(28px);
-    opacity: .02;
-  }
-
-  /* New page animates to final state */
-  html.is-animating .transition-slide {
-    transform: none;
-    opacity: 1;
-  }
-
-  /* Safety: never animate on very first page load */
-  html:not(.is-changing) .transition-slide {
-    transform: none !important;
-    opacity: 1 !important;
-  }
+  /* Avoid horizontal scroll jolt */
+  html, body { overflow-x: hidden; }
 </style>
+
 
 
 
@@ -138,7 +111,8 @@
   });
 </script>
 
-<main id="swup" class="transition-slide container mx-auto px-4 pt-16">
+<main id="swup" class="transition-fade container ...">
+
 
   <section class="container mx-auto px-4 pt-16">
     <div class="grid md:grid-cols-2 gap-10 items-center">

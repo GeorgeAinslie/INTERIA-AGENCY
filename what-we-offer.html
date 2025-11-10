@@ -3,18 +3,17 @@
 
 
  <head>
-  ...
-  <style>
-    /* TEMP: Pure fade to sanity-check */
-    .transition-fade { opacity: 1; }
-    html.is-changing .transition-fade { transition: opacity .35s ease; }
-    html.is-leaving  .transition-fade { opacity: .02; }
-    html.is-rendering .transition-fade { opacity: .02; }
-    html.is-animating .transition-fade { opacity: 1; }
+<style>
+  /* Tap/Click feedback */
+  .nav-link, .btn {
+    transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+  }
+  .nav-link:active, .btn:active {
+    transform: translateY(1px) scale(0.98);
+    filter: brightness(0.98);
+  }
+</style>
 
-    html, body { overflow-x: hidden; } /* avoids horizontal jank */
-  </style>
-</head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">

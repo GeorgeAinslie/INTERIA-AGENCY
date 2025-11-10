@@ -57,18 +57,46 @@
     .card { @apply rounded-2xl border border-gray-200 bg-white shadow-sm; }
   </style>
 
- <style>
-  /* Swup slide using html state classes */
-  .transition-slide { will-change: transform, opacity; }
+<style>
+  /* Base: no animation when not changing pages */
+  .transition-slide { 
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    contain: paint;
+    transform: none;
+    opacity: 1;
+  }
 
-  /* Leaving page (slide left + fade) */
-  html.is-changing .transition-slide { transition: transform .45s ease, opacity .45s ease; }
-  html.is-leaving  .transition-slide { transform: translateX(-28px); opacity: .02; }
+  /* Animate only while Swup is doing a transition */
+  html.is-changing .transition-slide {
+    transition: transform .45s ease, opacity .45s ease;
+  }
 
-  /* Entering page (start right, slide in) */
-  html.is-rendering .transition-slide { transform: translateX(28px); opacity: .02; }
-  html.is-animating .transition-slide { transform: translateX(0);   opacity: 1;  }
+  /* Old page leaves (slides left + fades) */
+  html.is-leaving .transition-slide {
+    transform: translateX(-28px);
+    opacity: .02;
+  }
+
+  /* New page initial state (start right + faded) */
+  html.is-rendering .transition-slide {
+    transform: translateX(28px);
+    opacity: .02;
+  }
+
+  /* New page animates to final state */
+  html.is-animating .transition-slide {
+    transform: none;
+    opacity: 1;
+  }
+
+  /* Safety: never animate on very first page load */
+  html:not(.is-changing) .transition-slide {
+    transform: none !important;
+    opacity: 1 !important;
+  }
 </style>
+
 
 
 

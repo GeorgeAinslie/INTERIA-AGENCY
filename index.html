@@ -1,26 +1,20 @@
 <!doctype html>
 <html lang="en">
-<style>
-  /* Tap/Click feedback */
-  .nav-link, .btn { transition: transform .08s ease, filter .12s ease, box-shadow .12s ease; }
-  .nav-link:active, .btn:active { transform: translateY(1px) scale(0.98); filter: brightness(0.98); }
 
-  /* Subtle hover + current page highlight */
-  .nav-link:hover { text-decoration: underline; }
-  .nav-link[aria-current="page"] { font-weight: 600; text-decoration: underline; }
+ <head>
+  ...
+  <style>
+    /* TEMP: Pure fade to sanity-check */
+    .transition-fade { opacity: 1; }
+    html.is-changing .transition-fade { transition: opacity .35s ease; }
+    html.is-leaving  .transition-fade { opacity: .02; }
+    html.is-rendering .transition-fade { opacity: .02; }
+    html.is-animating .transition-fade { opacity: 1; }
 
-  /* Top loading bar (NProgress) */
-  #nprogress { pointer-events: none; }
-  #nprogress .bar {
-    background: #ff6b33; position: fixed; z-index: 1031; top: 0; left: 0; width: 100%; height: 3px;
-  }
-  #nprogress .peg {
-    display: block; position: absolute; right: 0; width: 100px; height: 100%;
-    box-shadow: 0 0 10px #ff6b33, 0 0 5px #ff6b33; opacity: 1; transform: rotate(3deg) translate(0,-4px);
-  }
-</style>
+    html, body { overflow-x: hidden; } /* avoids horizontal jank */
+  </style>
+</head>
 
-  <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Interia Agency</title>
@@ -111,7 +105,10 @@
   });
 </script>
 
-<main id="swup" class="transition-fade container ...">
+<main id="swup" class="transition-fade container mx-auto px-4 pt-16">
+  <!-- your page content -->
+</main>
+
 
 
   <section class="container mx-auto px-4 pt-16">
